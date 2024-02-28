@@ -141,6 +141,8 @@ def videoCascade(path, frames):
 
 def main():
     videoCascade("tank.mp4",1)
+    # or
+    imageCascade()
 
 if __name__ == "__main__":
     main()

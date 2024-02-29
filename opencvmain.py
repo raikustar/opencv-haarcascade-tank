@@ -4,6 +4,7 @@ import os
 
 
 
+
 # wild functions
 def resizeImages():
     n_path = "tankbackup/neg/"
@@ -62,9 +63,8 @@ def returnBigBox(boxes, size):
 
 
 # image
-def imageCascade():
-
-    image = cv2.imread("p/positive226.jpg") 
+def imageCascade(imagepath):
+    image = cv2.imread(imagepath) 
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     cas = cv2.CascadeClassifier("haarcascade_russiantanks_alpha_v1_20_20.xml")
 
@@ -140,9 +140,9 @@ def videoCascade(path, frames):
     # if there are multiple bix boxes
 
 def main():
-    videoCascade("tank.mp4",1)
+    #videoCascade("tank.mp4",1)
     # or
-    imageCascade()
+    imageCascade("tank.jpg")
 
 if __name__ == "__main__":
     main()

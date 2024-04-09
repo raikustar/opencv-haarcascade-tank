@@ -83,6 +83,35 @@ def imageCascade(imagepath):
         cv2.destroyAllWindows()
 
 
+def imageCascadeTwo(imagepath):
+    image = cv2.imread(imagepath) 
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    cas = cv2.CascadeClassifier("haarcascade_russiantanks_alpha_v1_20_20.xml")
+
+    target = cas.detectMultiScale(image=gray, minNeighbors=2, minSize=(80,80))  
+
+    a = []
+    for idx, d in enumerate(target):
+        a.append([idx, d[3]])
+
+    id_box = max(a, key=lambda x:x[1])
+    rx, ry, rw, rh = target[id_box[0]]
+    # singular big box
+    roi = image[ry:ry+rh, rx:rx+rw]
+    
+    target2 = cas.detectMultiScale(image=roi, minNeighbors=1, minSize=(40,40))  
+    results, _ = cv2.groupRectangles(target2,3,2)
+    
+    cv2.rectangle(image, (rx,ry), (rx+rw,ry+rh), (20,150,250), 2)
+
+    a = []
+    cv2.imshow("Tank detection test", image)
+
+    if cv2.waitKey(0) == ord("q"):
+        cv2.destroyAllWindows()
+
+
+
 # video
 def videoCascade(path, frames):
     video = cv2.VideoCapture(path)

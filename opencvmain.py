@@ -113,9 +113,10 @@ def imageCascadeTwo(imagepath):
 
 
 # video
+## Busted logic after tweak
 def videoCascade(path, frames):
     video = cv2.VideoCapture(path)
-    cas = cv2.CascadeClassifier("haarcascade_russiantanks_alpha_v1_20_20.xml") # 12 stages
+    cas = cv2.CascadeClassifier("cascade.xml") # 12 stages
 
     if not video.isOpened():
         print("Cannot open video")

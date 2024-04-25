@@ -66,7 +66,7 @@ def returnBigBox(boxes, size):
 def imageCascade(imagepath):
     image = cv2.imread(imagepath) 
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    cas = cv2.CascadeClassifier("haarcascade_russiantanks_alpha_v1_20_20.xml")
+    cas = cv2.CascadeClassifier("cascade.xml")
 
     target = cas.detectMultiScale(image=gray, minNeighbors=4, minSize=(50,50))  
     results, _ = cv2.groupRectangles(target, 2, 2)

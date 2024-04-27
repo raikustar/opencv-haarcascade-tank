@@ -65,7 +65,7 @@ def returnBigBox(boxes, size):
 def imageCascade(imagepath):
     image = cv2.imread(imagepath) 
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    cas = cv2.CascadeClassifier("cascade_20.xml")
+    cas = cv2.CascadeClassifier("cascade.xml")
     target = cas.detectMultiScale(image=gray, minNeighbors=1)
     for t in target:
         x,y,w,h = t
@@ -81,7 +81,7 @@ def imageCascade(imagepath):
 # poo
 def videoCascade(path, frames):
     video = cv2.VideoCapture(path)
-    cas = cv2.CascadeClassifier("haarcascade_russiantanks_alpha_v1_20_20.xml") # 12 stages
+    cas = cv2.CascadeClassifier("cascade.xml")
 
     if not video.isOpened():
         print("Cannot open video")

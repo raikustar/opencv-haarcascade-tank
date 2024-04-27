@@ -22,19 +22,18 @@ def resizeImages():
                 scaleAndWriteImageFile(path=p_path, file=d, folder="p", name="positive", index=index)
         else:
             break
-            
+
 def scaleImage(image):
     targetW, targetH = 1024, 576
     newImg = str(image)
     img = cv2.imread(cv2.samples.findFile(newImg))
     w,h = img.shape[1::-1]
-
     wW, hH = targetW/w, targetH/h  
     scale = (wW + hH) /2
-    
     return scale
-   
+
 def writeFileNeg():
+    print(">>> Creating neg.txt file.")
     name = "neg"
     neg = os.listdir("./n/")
     
@@ -66,57 +65,23 @@ def returnBigBox(boxes, size):
 def imageCascade(imagepath):
     image = cv2.imread(imagepath) 
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    cas = cv2.CascadeClassifier("cascade.xml")
-
-    target = cas.detectMultiScale(image=gray, minNeighbors=4, minSize=(50,50))  
-    results, _ = cv2.groupRectangles(target, 2, 2)
-    for coord in results:
-        if len(coord) != 4:
-            continue
-
-        x,y,w,h = coord
-        cv2.rectangle(image, (x,y), (x+w,y+h), (0,230,120), 2)
+    cas = cv2.CascadeClassifier("cascade_20.xml")
+    target = cas.detectMultiScale(image=gray, minNeighbors=1)
+    for t in target:
+        x,y,w,h = t
+        cv2.rectangle(image, (x,y), (x+w,y+h), (0,0,250), 2)
 
     cv2.imshow("Tank detection test", image)
 
     if cv2.waitKey(0) == ord("q"):
         cv2.destroyAllWindows()
-
-
-def imageCascadeTwo(imagepath):
-    image = cv2.imread(imagepath) 
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    cas = cv2.CascadeClassifier("haarcascade_russiantanks_alpha_v1_20_20.xml")
-
-    target = cas.detectMultiScale(image=gray, minNeighbors=2, minSize=(80,80))  
-
-    a = []
-    for idx, d in enumerate(target):
-        a.append([idx, d[3]])
-
-    id_box = max(a, key=lambda x:x[1])
-    rx, ry, rw, rh = target[id_box[0]]
-    # singular big box
-    roi = image[ry:ry+rh, rx:rx+rw]
-    
-    target2 = cas.detectMultiScale(image=roi, minNeighbors=1, minSize=(40,40))  
-    results, _ = cv2.groupRectangles(target2,3,2)
-    
-    cv2.rectangle(image, (rx,ry), (rx+rw,ry+rh), (20,150,250), 2)
-
-    a = []
-    cv2.imshow("Tank detection test", image)
-
-    if cv2.waitKey(0) == ord("q"):
-        cv2.destroyAllWindows()
-
 
 
 # video
-## Busted logic after tweak
+# poo
 def videoCascade(path, frames):
     video = cv2.VideoCapture(path)
-    cas = cv2.CascadeClassifier("cascade.xml") # 12 stages
+    cas = cv2.CascadeClassifier("haarcascade_russiantanks_alpha_v1_20_20.xml") # 12 stages
 
     if not video.isOpened():
         print("Cannot open video")
@@ -170,10 +135,8 @@ def videoCascade(path, frames):
     # if there are multiple bix boxes
 
 def main():
-    #videoCascade("tank.mp4",1)
-    # or
-    imageCascade("tank.jpg")
-
+    imageCascade("p/positive260.jpg")
+    
 if __name__ == "__main__":
     main()
 

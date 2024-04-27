@@ -3,6 +3,6 @@ Inside virtual env:
 
 
 Russian T-72, T-80, T-90 tanks. 
-  Positive sample size 500+ images.
+Positive sample size 650 images.
 
-Negative sample size 2200+ images.
+Negative sample size 3500 images.
